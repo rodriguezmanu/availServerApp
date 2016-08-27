@@ -18,15 +18,15 @@
                 server;
 
             $http.get(constantValues().filesMock.ok)
-                .then(function (response) {
-                    angular.forEach(response.data, function (value) {
+                .then((response) => {
+                    angular.forEach(response.data, (value) => {
                         servers.push(
-                            $http.post('/api/checkAvailabilityService', value, {timeout: 5000})
+                            $http.get(`/api/checkAvailabilityService?url=${value.url}&priority=${value.priority}`, {timeout: 5000})
                         );
                     });
                     $q.allSettled(servers)
-                    .then(function (entries) {
-                        angular.forEach(entries, function(entry) {
+                    .then((entries) => {
+                        angular.forEach(entries,(entry) => {
                             if (entry.state === 'fulfilled') {
                                 if (entry.value.data.priority > priority) {
                                     priority = entry.value.data.priority;
@@ -41,7 +41,7 @@
                         }
                     });
 
-                }, function (response) {
+                }, (response) => {
                     console.log('error get:', response);
                 });
 

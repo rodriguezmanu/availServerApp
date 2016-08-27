@@ -6,13 +6,17 @@ var morgan = require('morgan');
 var url = require('url');
 var urlExists = require('url-exists');
 
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
-app.post('/api/checkAvailabilityService', (req, res) => {
-    urlExists(req.body.url,(err, exists) => {
+app.get('/api/checkAvailabilityService', (req, res) => {
+    urlExists(req.query.url,(err, exists) => {
       if (exists) {
-        return res.status(200).send(req.body);
+        var response = {
+            url: req.query.url,
+            priority: req.query.priority
+        };
+        return res.status(200).send(response);
       } else {
         return res.status(300).send();
       }
