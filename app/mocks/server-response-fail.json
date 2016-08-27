@@ -1,0 +1,14 @@
+[
+  {
+    "priority": 1,
+    "url": "http://doesNotExist.boldtech.co"
+  },
+  {
+    "priority": 2,
+    "url": "http://offline.boldtech.co"
+  },
+  {
+    "priority": 4,
+    "url": "http://boldcommunity.com"
+  }
+]
