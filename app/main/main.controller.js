@@ -13,7 +13,13 @@
         activate();
 
         function activate() {
-            FindServer.getServer();
+            FindServer.getServer()
+                .then(function(data) {
+                    console.log('succed:', data);
+                })
+                .catch(function(err) {
+                    console.log('error: ', err);
+                });
         }
     }
 })();

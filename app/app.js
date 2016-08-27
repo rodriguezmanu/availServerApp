@@ -3,6 +3,7 @@
     angular
         .module('boldApp', [
             'ui.router',
-            'boldApp.service.find-server'
+            'boldApp.service.find-server',
+            'ngPromiseExtras'
         ]);
 })();
