@@ -18,7 +18,7 @@
         function activate() {
             FindServer.getServers('ok')
                 .then(function (response) {
-                    vm.listServerOnline = response.ata;
+                    vm.listServerOnline = response.data;
                 });
 
             FindServer.getServers('fail')

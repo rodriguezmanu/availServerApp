@@ -40,8 +40,8 @@
                                 }
                             }
                         });
-                        if (server === undefined) {
-                            deferred.reject('error');
+                        if (angular.isUndefined(server)) {
+                            deferred.reject('All servers are Off-line');
                         } else {
                             deferred.resolve(server);
                         }
