@@ -8,6 +8,7 @@ var urlExists = require('url-exists');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+app.use(require('connect-livereload')());
 
 app.get('/api/checkAvailabilityService', (req, res) => {
     urlExists(req.query.url,(err, exists) => {

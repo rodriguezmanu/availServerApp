@@ -10,15 +10,40 @@
     function MainCtrl(FindServer) {
         var vm = this;
 
+        vm.succed = succed;
+        vm.failed = failed;
+
         activate();
 
         function activate() {
-            FindServer.getServer()
+            FindServer.getServers('ok')
+                .then(function (response) {
+                    vm.listServerOnline = response.ata;
+                });
+
+            FindServer.getServers('fail')
+                .then(function (response) {
+                    vm.listServerOffline = response.data;
+                });
+        }
+
+        function succed() {
+            FindServer.getServerAvail('ok')
                 .then(function(data) {
-                    console.log('succed:', data);
+                    vm.serverOnline = data;
                 })
                 .catch(function(err) {
-                    console.log('error: ', err);
+                    vm.errorOnline = err;
+                });
+        }
+
+        function failed() {
+            FindServer.getServerAvail('fail')
+                .then(function(data) {
+                    vm.serverOffline = data;
+                })
+                .catch(function(err) {
+                    vm.errorOffline = err;
                 });
         }
     }

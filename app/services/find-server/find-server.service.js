@@ -9,19 +9,25 @@
 
     /* @ngInject */
     function FindServer($http, constantValues, $q) {
-        this.getServer = getServer;
+        this.getServers = getServers;
+        this.getServerAvail = getServerAvail;
 
-        function getServer() {
+        function getServers(status) {
+            return $http.get(constantValues().filesMock[status]);
+        }
+
+        function getServerAvail(status) {
             var servers = [],
                 deferred = $q.defer(),
                 priority = 0,
                 server;
 
-            $http.get(constantValues().filesMock.ok)
+            $http.get(constantValues().filesMock[status])
                 .then((response) => {
                     angular.forEach(response.data, (value) => {
                         servers.push(
-                            $http.get(`/api/checkAvailabilityService?url=${value.url}&priority=${value.priority}`, {timeout: 5000})
+                            $http.get(`/api/checkAvailabilityService?url=${value.url}&priority=${value.priority}`,
+                                {timeout: 5000})
                         );
                     });
                     $q.allSettled(servers)
