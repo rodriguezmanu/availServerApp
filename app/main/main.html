@@ -2,20 +2,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-                <button type="button" class="btn btn-success" ng-click="vm.succed()">Online Server</button>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" ng-click="vm.succed()">Submit Online Server</button>
+                </div>
                 <h4>Json Example</h4>
-                <pre>{{vm.listServerOnline | json}}</pre>
+                <pre>{{::vm.listServerOnline | json}}</pre>
                 <h4>Result</h4>
-                <pre ng-show="vm.serverOnline">{{vm.serverOnline}}</pre>
-                <pre ng-show="vm.errorOnline">{{vm.errorOnline}}</pre>
+                <pre ng-show="vm.serverOnline">{{::vm.serverOnline}}</pre>
+                <pre ng-show="vm.errorOnline">{{::vm.errorOnline}}</pre>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-                <button type="button" class="btn btn-danger" ng-click="vm.failed()">Offline Server</button>
+                <div class="text-center">
+                    <button type="button" class="btn btn-danger text-center" ng-click="vm.failed()">Submit Offline Server</button>
+                </div>
                 <h4>Json Example</h4>
-                <pre>{{vm.listServerOffline | json}}</pre>
+                <pre>{{::vm.listServerOffline | json}}</pre>
                 <h4>Result</h4>
-                <pre ng-show="vm.serverOffline">{{vm.serverOffline}}</pre>
-                <pre ng-show="vm.errorOffline">{{vm.errorOffline}}</pre>
+                <pre ng-show="vm.serverOffline">{{::vm.serverOffline}}</pre>
+                <pre ng-show="vm.errorOffline">{{::vm.errorOffline}}</pre>
             </div>
         </div>
     </div>

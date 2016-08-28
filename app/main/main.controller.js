@@ -8,7 +8,9 @@
 
     /* @ngInject */
     function MainCtrl(FindServer) {
-        var vm = this;
+        var vm = this,
+            okFile = 'ok',
+            failFile = 'fail';
 
         vm.succed = succed;
         vm.failed = failed;
@@ -16,19 +18,19 @@
         activate();
 
         function activate() {
-            FindServer.getServers('ok')
+            FindServer.getServers(okFile)
                 .then(function (response) {
                     vm.listServerOnline = response.data;
                 });
 
-            FindServer.getServers('fail')
+            FindServer.getServers(failFile)
                 .then(function (response) {
                     vm.listServerOffline = response.data;
                 });
         }
 
         function succed() {
-            FindServer.getServerAvail('ok')
+            FindServer.getServerAvail(okFile)
                 .then(function(data) {
                     vm.serverOnline = data;
                 })
@@ -38,7 +40,7 @@
         }
 
         function failed() {
-            FindServer.getServerAvail('fail')
+            FindServer.getServerAvail(failFile)
                 .then(function(data) {
                     vm.serverOffline = data;
                 })

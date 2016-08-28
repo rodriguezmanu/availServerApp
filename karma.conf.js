@@ -4,6 +4,9 @@ module.exports = function(config) {
     frameworks:['jasmine'],
     files: [
       'bower_components/angular/angular.js',
+      'bower_components/angular-promise-extras/angular-promise-extras.js',
+      'bower_components/angular-scenario/angular-scenario.js',
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'app/app.js',
       'app/constant.js',
@@ -28,8 +31,8 @@ module.exports = function(config) {
       }
     },
     exclude: [],
-    port: 8080,
-    logLevel: config.LOG_INFO,
+    port: 8082,
+    logLevel: config.LOG_DEGUG,
     autoWatch: false,
     browsers: ['PhantomJS2'],
     singleRun: false,
