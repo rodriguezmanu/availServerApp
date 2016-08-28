@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-karma');
 
   grunt
       .initConfig({
@@ -84,11 +85,7 @@ module.exports = function(grunt) {
         }
     });
 
-  grunt.registerTask('test', function(target) {
-    grunt.task.run(['karma']);
-  });
-
+  grunt.registerTask('test',['karma']);
   grunt.registerTask('serve', ['express:dev', 'open', 'watch']);
-
   grunt.registerTask('lint', ['jscs', 'jshint']);
 };
