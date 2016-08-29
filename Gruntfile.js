@@ -78,8 +78,10 @@ module.exports = function(grunt) {
 
         //adding conditial index.html
         preprocess : {
-          src  : 'base.html',
-          dest : 'index.html'
+          inline : {
+            src  : 'base.html',
+            dest : 'index.html'
+          }
         },
 
         //express connect
