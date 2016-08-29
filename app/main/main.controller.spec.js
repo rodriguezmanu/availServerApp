@@ -13,6 +13,14 @@ describe('Controller: MainCtrl', function () {
         urlServer,
         mockDataOk =  [
             {
+                priority: 1,
+                url: 'http://doesNotExist.boldtech.co'
+            },
+            {
+                priority: 4,
+                url: 'http://clarin.com'
+            },
+            {
                 priority: 7,
                 url: 'http://www.lanacion.com.ar'
             }
@@ -21,6 +29,10 @@ describe('Controller: MainCtrl', function () {
             {
                 priority: 1,
                 url: 'http://doesNotExist.boldtech.co'
+            },
+            {
+                priority: 2,
+                url: 'http://doesNotExist.foo.com'
             }
         ];
 
@@ -28,17 +40,15 @@ describe('Controller: MainCtrl', function () {
         scope = $rootScope.$new();
         httpBackend = $httpBackend;
 
-        $httpBackend.when('GET', 'app/main/main.html').respond(200);
-
         mainCtrl = $controller('MainCtrl', {
             $scope: scope,
             FindServer: FindServer
         });
-        var urlOk = '/app/mocks/server-response-ok.json';
-        httpBackend.when('GET', urlOk).respond(200, mockDataOk);
 
-        var urlFail = '/app/mocks/server-response-fail.json';
-        httpBackend.when('GET', urlFail).respond(200, mockDataFail);
+        httpBackend.when('GET', 'app/main/main.html').respond(200);
+        httpBackend.when('GET', '/app/mocks/server-response-ok.json').respond(200, mockDataOk);
+        httpBackend.when('GET', '/app/mocks/server-response-fail.json').respond(200, mockDataFail);
+
         httpBackend.flush();
     }));
 
@@ -69,11 +79,13 @@ describe('Controller: MainCtrl', function () {
     it('offline servers', inject(function(_$q_, FindServer) {
         q = _$q_;
         deferred = _$q_.defer();
+
         spyOn(FindServer, 'getServerAvail').and.callFake(function () {
             var d = q.defer();
             d.reject('fail');
             return d.promise;
         });
+
         mainCtrl.failed();
         deferred.reject();
 
@@ -86,15 +98,12 @@ describe('Controller: MainCtrl', function () {
     it('should return server online priorizated', function() {
         mainCtrl.succed();
 
-        var mockServersOk =
-        {
-            url: 'http://www.lanacion.com.ar',
-            priority:'4'
-        };
-
         for (var i = 0; i < mockDataOk.length; i++) {
             urlServer = `/api/checkAvailabilityService?url=${mockDataOk[i].url}&priority=${mockDataOk[i].priority}`;
-            httpBackend.when('GET', urlServer).respond(200, mockServersOk);
+            httpBackend.when('GET', urlServer).respond(200, {
+                url: mockDataOk[i].url,
+                priority:mockDataOk[i].priority
+            });
         }
 
         httpBackend.flush();
@@ -106,7 +115,7 @@ describe('Controller: MainCtrl', function () {
     it('should return server offline', function() {
         mainCtrl.failed();
 
-        for (var i = 0; i < mockDataOk.length; i++) {
+        for (var i = 0; i < mockDataFail.length; i++) {
             urlServer = `/api/checkAvailabilityService?url=${mockDataFail[i].url}&priority=${mockDataFail[i].priority}`;
             httpBackend.when('GET', urlServer).respond(300);
         }
@@ -115,6 +124,5 @@ describe('Controller: MainCtrl', function () {
 
         expect(mainCtrl.errorOffline).toBe('All servers are Off-line');
         expect(mainCtrl.serverOffline).toBe(undefined);
-
     });
 });
