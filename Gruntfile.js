@@ -12,6 +12,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-env');
   grunt.loadNpmTasks('grunt-preprocess');
+  grunt.loadNpmTasks('grunt-ng-annotate');
 
   grunt
       .initConfig({
@@ -23,6 +24,18 @@ module.exports = function(grunt) {
         open : {
           server : {
             url : 'http://localhost:8080'
+          }
+        },
+
+        // Allow the use of non-minsafe AngularJS files. Automatically makes it minsafe compatible so Uglify does not destroy the ng
+        ngAnnotate : {
+          dist : {
+            files : [ {
+              expand : true,
+              cwd : 'tmp/',
+              src : 'app/**/*.js',
+              dest : 'tmp/'
+            } ]
           }
         },
 
@@ -39,7 +52,7 @@ module.exports = function(grunt) {
         // minify js
         uglify: {
            options: {
-             mangle: false
+             mangle: true
            },
            min: {
             files: [{
@@ -153,5 +166,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test',['karma']);
   grunt.registerTask('serve', ['express:dev', 'env:dev', 'preprocess', 'open', 'watch']);
   grunt.registerTask('lint', ['jscs', 'jshint']);
-  grunt.registerTask('build', ['babel', 'uglify', 'env:prod', 'preprocess', 'copy']);
+  grunt.registerTask('build', ['babel', 'ngAnnotate','uglify', 'env:prod', 'preprocess', 'copy']);
 };
