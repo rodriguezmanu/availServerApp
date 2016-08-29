@@ -11,14 +11,17 @@
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-promise-extras/angular-promise-extras.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
-        <!-- app -->
-        <script src="app/app.js"></script>
-        <script src="app/router.js"></script>
-        <script src="app/constant.js"></script>
-        <script src="app/main/main.controller.js"></script>
-        <script src="app/services/find-server/find-server.module.js"></script>
-        <script src="app/services/find-server/find-server.service.js"></script>
+        <!-- @if NODE_ENV='development' -->
+            <script src="app/app.js"></script>
+            <script src="app/router.js"></script>
+            <script src="app/constant.js"></script>
+            <script src="app/main/main.controller.js"></script>
+            <script src="app/services/find-server/find-server.module.js"></script>
+            <script src="app/services/find-server/find-server.service.js"></script>
+        <!-- @endif -->
+        <!-- @if NODE_ENV='production' -->
+            <script src="dist/app/app.min.js"></script>
+        <!-- @endif -->
     </head>
     <body ng-app="boldApp">
         <ui-view></ui-view>
