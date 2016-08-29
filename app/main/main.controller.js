@@ -19,32 +19,32 @@
 
         function activate() {
             FindServer.getServers(okFile)
-                .then(function (response) {
+                .then((response) => {
                     vm.listServerOnline = response.data;
                 });
 
             FindServer.getServers(failFile)
-                .then(function (response) {
+                .then((response) => {
                     vm.listServerOffline = response.data;
                 });
         }
 
         function succed() {
             FindServer.getServerAvail(okFile)
-                .then(function(data) {
+                .then((data) => {
                     vm.serverOnline = data;
                 })
-                .catch(function(err) {
+                .catch((err) => {
                     vm.errorOnline = err;
                 });
         }
 
         function failed() {
             FindServer.getServerAvail(failFile)
-                .then(function(data) {
+                .then((data) => {
                     vm.serverOffline = data;
                 })
-                .catch(function(err) {
+                .catch((err) => {
                     vm.errorOffline = err;
                 });
         }

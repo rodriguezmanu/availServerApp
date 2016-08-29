@@ -30,23 +30,23 @@
                                 {timeout: 5000})
                         );
                     });
+
                     $q.allSettled(servers)
-                    .then((entries) => {
-                        angular.forEach(entries,(entry) => {
-                            if (entry.state === 'fulfilled') {
-                                if (entry.value.data.priority > priority) {
-                                    priority = entry.value.data.priority;
-                                    server = entry.value.data.url;
+                        .then((entries) => {
+                            angular.forEach(entries,(entry) => {
+                                if (entry.state === 'fulfilled') {
+                                    if (entry.value.data.priority > priority) {
+                                        priority = entry.value.data.priority;
+                                        server = entry.value.data.url;
+                                    }
                                 }
+                            });
+                            if (angular.isUndefined(server)) {
+                                deferred.reject('All servers are Off-line');
+                            } else {
+                                deferred.resolve(server);
                             }
                         });
-                        if (angular.isUndefined(server)) {
-                            deferred.reject('All servers are Off-line');
-                        } else {
-                            deferred.resolve(server);
-                        }
-                    });
-
                 }, (response) => {
                     console.log('error get:', response);
                 });
