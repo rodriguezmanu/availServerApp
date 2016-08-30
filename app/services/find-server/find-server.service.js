@@ -12,10 +12,20 @@
         this.getServers = getServers;
         this.getServerAvail = getServerAvail;
 
+        /**
+         * Get Servers from json mock
+         * @param  {String} status [json file ending | ok or fail]
+         * @return {Promise}       [mock data servers]
+         */
         function getServers(status) {
             return $http.get(constantValues().filesMock[status]);
         }
 
+        /**
+         * Get Service availability, could be online with lowest priority or in case all are off line return an error
+         * @param  {String} status [json file ending | ok or fail]
+         * @return {Promise}       [Server online with lowest priority or error when are all offline]
+         */
         function getServerAvail(status) {
             var servers = [],
                 deferred = $q.defer(),

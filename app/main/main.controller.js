@@ -17,6 +17,9 @@
 
         activate();
 
+        /**
+         * Init method, get servers mock json to show in view as an example
+         */
         function activate() {
             FindServer.getServers(okFile)
                 .then((response) => {
@@ -29,6 +32,9 @@
                 });
         }
 
+        /**
+         * Get server online prioritized
+         */
         function succed() {
             FindServer.getServerAvail(okFile)
                 .then((data) => {
@@ -39,6 +45,9 @@
                 });
         }
 
+        /**
+         * Get server offline, an error will be shown.
+         */
         function failed() {
             FindServer.getServerAvail(failFile)
                 .then((data) => {
