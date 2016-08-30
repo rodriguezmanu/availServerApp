@@ -32,6 +32,7 @@
                 priority = 0,
                 server;
 
+            //get servers from mock json depending status
             $http.get(constantValues().filesMock[status])
                 .then((response) => {
                     angular.forEach(response.data, (value) => {
@@ -41,6 +42,7 @@
                         );
                     });
 
+                    //make all get calls simultaneously in order to see is online or not and then return this
                     $q.allSettled(servers)
                         .then((entries) => {
                             angular.forEach(entries,(entry) => {
@@ -51,6 +53,8 @@
                                     }
                                 }
                             });
+
+                            // undefined means are all offline
                             if (angular.isUndefined(server)) {
                                 deferred.reject('All servers are Off-line');
                             } else {
